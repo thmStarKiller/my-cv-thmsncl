@@ -1,0 +1,157 @@
+THOMAS NICOLI
+Salesforce Commerce Cloud Solution Architect · Digital D2C & Platforms
+Madrid, Spain
+
+Phone: +33 7 49 06 21 92
+Email: thomas.nicoli@metamorphoses-consulting.co.uk
+
+LinkedIn: linkedin.com/in/thomasnicoli
+
+PROFILE
+
+Digital e-commerce and platform specialist with 10+ years of experience across D2C, content, and SEO, including 3+ years hands-on on Salesforce Commerce Cloud within a large international beauty group. Currently supporting the SFCC platform for multiple L’Oréal brands across Europe, acting as a strategic bridge between business teams, brands, and IT.
+
+Experienced in architecting and evolving multi-site SFCC solutions, integrating with CRM and marketing ecosystems, and coordinating external vendors to deliver scalable, high-performing platforms. Comfortable working in complex international environments and designing future-proof technical strategies aligned with business goals.
+
+Looking to leverage this experience to drive the global evolution and performance of Triumph’s Salesforce Commerce Cloud landscape and support best-in-class digital shopping experiences.
+
+KEY STRENGTHS (MATCHED TO THE ROLE)
+
+SFCC Solution Architecture & Evolution – Multi-site, multi-brand environments; design of scalable and reusable site structures and services.
+
+Omnichannel & D2C Journeys – Alignment of global platform standards with local market requirements (content, services, promos, data).
+
+Cross-System Integration – Experience working with APIs, backend jobs, CRM/marketing tools and analytics to connect SFCC to a broader ecosystem.
+
+Vendor & Stakeholder Management – Daily collaboration with IT partners, agencies, and internal business owners; backlog, scoping & delivery.
+
+Platform Reliability & Monitoring – Incident follow-up, SFCC job monitoring, coordination with IT on SLAs & root-cause analysis.
+
+CI/CD & DevOps Mindset – Used to structured release calendars, automated jobs, versioning and environment management with IT partners.
+
+Global Communication – Used to working with cross-country stakeholders (Europe, global teams), in English, French and Spanish.
+
+CORE SKILLS & TECHNOLOGIES
+
+Platforms & E-commerce
+
+Salesforce Commerce Cloud (SFCC) – Business Manager, content & promotions, catalog management, services integration.
+
+Salesforce Marketing Cloud (SFMC) – Triggered journeys, transactional emails, data flows from SFCC.
+
+Experience with other platforms: Magento, PrestaShop, WordPress.
+
+Architecture & Integration
+
+Cross-system data flows (catalogs, orders, services, emails).
+
+API-based integrations (REST), webhooks, job-driven FTP / file exchanges.
+
+Data layer & tracking events to feed analytics and marketing tools.
+
+Front-end & Development
+
+HTML5, CSS3, JavaScript.
+
+Experience with modern stacks on side projects: Node.js, React, Python.
+
+Strong understanding of UX for D2C product and services pages.
+
+Analytics & Tooling
+
+Google Analytics / GA4, tag managers.
+
+JIRA, ServiceNow, Confluence, Notion.
+
+Git/GitHub, basic CI/CD concepts and collaboration with DevOps/IT.
+
+Languages
+
+French – Native / Bilingual
+
+English – Native / Bilingual
+
+Spanish – Native / Bilingual
+
+Italian – Elementary
+
+PROFESSIONAL EXPERIENCE
+
+L’ORÉAL – Digital Web & Platform Management (D2C & SFCC)
+Madrid, Spain · Aug 2024 – Present
+
+Role covering the D2C SFCC platform for multiple L’Oréal brands across Europe, within the Digital Web & Platform Management / DEC team.
+
+E-commerce D2C platform ownership: support and optimisation of SFCC solutions across L’Oréal brands, ensuring platform consistency, stability and scalability at European level.
+
+Business → Tech translation: partner with brand teams, e-commerce managers and local markets to translate business needs into SFCC requirements (epics, user stories, briefs) and challenge them from a technical and platform-governance perspective.
+
+Digital Service Factory (Beauty Tech): deployment and activation of services (e.g. Virtual Try-On, shade finders, diagnostics) on SFCC PDPs and PLPs, coordinating data flows, UX placement and tracking.
+
+Email & CRM integration: management of triggered email migration from SFCC to Salesforce Marketing Cloud (SFMC) – including template implementation, API calls, triggers and cross-team testing.
+
+Front-end personalisation & engagement: implementation of front-end animations, gamification and custom CTAs on SFCC to promote services and campaigns while maintaining reusable, scalable components.
+
+Vendor & project coordination: day-to-day collaboration with external development partners and internal IT/Quality teams (e.g. incident tickets, enhancements, roll-outs), ensuring delivery within agreed scope and timelines.
+
+Monitoring & SLA contribution: follow-up on SFCC jobs, incidents and performance topics with IT, helping maintain uptime and a robust escalation / ticketing process.
+
+L’ORÉAL – Corporate Webmaster (Salesforce Commerce Cloud), NYX Professional Makeup – DEC
+Madrid, Spain · Mar 2023 – Aug 2024
+
+Corporate webmaster for NYX Professional Makeup’s SFCC sites across several key European markets.
+
+Content & campaign management: supervised marketing and campaign content on SFCC (home, PLP, PDP, landing pages), ensuring digital consistency with global brand guidelines.
+
+E-commerce campaign execution: coordinated with e-commerce and marketing teams to plan and launch digital campaigns, mapping business mechanics to SFCC content assets, promotions and services.
+
+Multi-market deployment: managed deployment of European campaigns across multiple countries, handling localisation (languages, assets, offers) and alignment with local regulations and expectations.
+
+Continuous optimisation: performed regular updates and optimisation of content and structure to maintain relevance, improve user engagement and support commercial objectives.
+
+Analysis & reporting: provided performance reports (traffic, engagement, conversion impacts) and proposed improvements to campaigns and page structures.
+
+Cross-functional collaboration: worked closely with product owners, IT partners and local markets to test new features and services and ensure high-quality releases.
+
+GOAT INTERACTIVE – Web Content Project Manager
+London, United Kingdom · Oct 2021 – Jan 2023
+
+Managed a portfolio of websites in multiple languages, ensuring brand consistency and performance.
+
+Built and updated pages using HTML5, CSS3 and JavaScript, collaborating with designers and CRM teams to deliver engaging experiences.
+
+Planned and executed digital campaigns, prepared briefs and commercial presentations aligning content, promotions and customer journeys.
+
+Delivered weekly and monthly reports to country managers, using data to refine content strategy and on-site experiences.
+
+METAMORPHOSES CONSULTING – Translator EN/ES → FR/EN & SEO Content Specialist
+Remote · Aug 2017 – May 2022
+
+Produced multilingual SEO-optimised content for diverse clients, including e-commerce, technology and lifestyle brands.
+
+Conducted keyword research, on-page optimisation and content structuring to improve organic visibility and user engagement.
+
+Developed a strong intercultural and customer-centric approach that remains at the core of current e-commerce work.
+
+EDUCATION
+
+ISIT – Institut Supérieur d’Interprétariat et de Traduction (Paris, France)
+Master’s Degree – Intercultural Management, Marketing & Translation (2014 – 2016)
+
+ISIT – Institut de Management et de Communication Interculturels
+Bachelor’s Degree – Management / Communication / Translation (2012 – 2014)
+
+Universitat Pompeu Fabra (Barcelona, Spain)
+Exchange – Spanish & Iberian Studies (2013)
+
+(Additional earlier preparatory classes in literature and humanities in France.)
+
+SELECTED TECHNICAL / SIDE PROJECTS
+
+(Demonstrating technical versatility & architecture mindset)
+
+SFCC Content Asset Analyzer (Python + AI) – Personal tool to crawl and analyse SFCC-powered sites, identify content assets, and classify them using AI to support governance and consistency.
+
+AI-driven automation scripts – Python and Node.js utilities to streamline catalog checks, promotion setups and documentation generation for SFCC environments.
+
+AI consulting micro-apps – Built small web apps (React/Next.js, Astro) that showcase automation, data analysis and chatbot use cases for e-commerce and SMEs.
