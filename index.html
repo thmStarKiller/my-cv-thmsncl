@@ -5,387 +5,404 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thomas Nicoli - Salesforce Commerce Cloud Solution Architect</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            },
+            plugins: [
+                function({ addUtilities }) {
+                    const newUtilities = {
+                        '.animation-delay-2000': {
+                            'animation-delay': '2s',
+                        },
+                        '.animation-delay-4000': {
+                            'animation-delay': '4s',
+                        },
+                    }
+                    addUtilities(newUtilities)
+                }
+            ]
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        :root {
-            --bg: radial-gradient(circle at 0% 0%, rgba(59,130,246,0.10), transparent 35%),
-                  radial-gradient(circle at 100% 10%, rgba(99,102,241,0.10), transparent 35%),
-                  radial-gradient(circle at 80% 80%, rgba(14,165,233,0.10), transparent 35%);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700&display=swap');
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 14%, #ffffff 55%, #f8fafc 100%);
-            background-image: var(--bg);
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
         }
-        .glass {
-            background: rgba(255,255,255,0.92);
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
-        .section-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .accent-pill {
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border-color: rgba(14, 165, 233, 0.3);
         }
-        .tags span {
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
+
+        .timeline-line {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #e2e8f0 0%, #cbd5e1 50%, transparent 100%);
         }
-        .play-button {
-            box-shadow: 0 14px 30px rgba(59,130,246,0.22);
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
-<body class="text-slate-800 antialiased">
-    <div class="min-h-screen">
-        <!-- Hero -->
-        <header class="relative overflow-hidden">
-            <div class="absolute inset-0 opacity-35 blur-3xl" aria-hidden="true">
-                <div class="w-72 h-72 bg-blue-500/30 rounded-full absolute -left-16 top-8"></div>
-                <div class="w-80 h-80 bg-indigo-500/30 rounded-full absolute right-10 top-10"></div>
-                <div class="w-96 h-96 bg-cyan-400/20 rounded-full absolute right-1/4 -bottom-20"></div>
-            </div>
-            <div class="relative max-w-6xl mx-auto px-6 pt-10 pb-16">
-                <div class="flex flex-col gap-10 lg:flex-row lg:items-start">
-                    <div class="glass rounded-3xl p-6 md:p-8 shadow-2xl flex-1">
-                        <div class="flex flex-col sm:flex-row gap-6">
-                            <div class="relative">
-                                <img src="imgs/moi-cv.png" alt="Profile photo of Thomas Nicoli" class="w-32 h-32 sm:w-48 sm:h-48 rounded-2xl object-cover border border-slate-200 shadow-xl">
-                                <div class="absolute -bottom-3 left-3 px-3 py-1 rounded-full accent-pill text-xs uppercase tracking-wide text-blue-700">Open to opportunities</div>
-                            </div>
-                            <div class="flex-1 space-y-4">
-                                <div class="flex items-center gap-3">
-                                    <span class="px-3 py-1 rounded-full text-xs tracking-wide uppercase bg-blue-500/10 text-blue-700 border border-blue-500/30">Salesforce Commerce Cloud</span>
-                                    <span class="px-3 py-1 rounded-full text-xs tracking-wide uppercase bg-emerald-500/10 text-emerald-700 border border-emerald-500/30">Digital D2C</span>
-                                </div>
-                                <div>
-                                    <h1 class="text-3xl md:text-4xl font-bold">Thomas Nicoli</h1>
-                                    <p class="text-lg text-slate-700 mt-2">Salesforce Commerce Cloud Solution Architect - Digital D2C & Platform Strategy</p>
-                                    <p class="text-sm text-slate-500 mt-1">Madrid, Spain - English / French / Spanish</p>
-                                </div>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-                                    <div class="section-card rounded-2xl p-4">
-                                        <p class="text-xs uppercase tracking-wide text-slate-500">Experience</p>
-                                        <p class="text-xl font-semibold">10+ years</p>
-                                    </div>
-                                    <div class="section-card rounded-2xl p-4">
-                                        <p class="text-xs uppercase tracking-wide text-slate-500">SFCC Focus</p>
-                                        <p class="text-xl font-semibold">3+ years</p>
-                                    </div>
-                                    <div class="section-card rounded-2xl p-4">
-                                        <p class="text-xs uppercase tracking-wide text-slate-500">Markets / Brands</p>
-                                        <p class="text-xl font-semibold">8+ markets / 10+ brands</p>
-                                    </div>
-                                </div>
-                                <div class="flex flex-wrap gap-3 text-sm">
-                                    <a class="accent-pill rounded-xl px-4 py-3 flex items-center gap-2 hover:-translate-y-0.5 transition" href="mailto:thomas.nicoli@metamorphoses-consulting.co.uk">
-                                        <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm15 2.24-7 4.2-7-4.2V18h14V7.24zm-13-.48 7 4.2 7-4.2V6H6v.76z"/></svg>
-                                        thomas.nicoli@metamorphoses-consulting.co.uk
-                                    </a>
-                                    <a class="accent-pill rounded-xl px-4 py-3 flex items-center gap-2 hover:-translate-y-0.5 transition" href="tel:+33749062192">
-                                        <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 3.44 8.2 2.86a1 1 0 0 1 1.2.5l1.52 3.04a1 1 0 0 1-.18 1.12l-1.4 1.54a11.05 11.05 0 0 0 4.99 4.99l1.54-1.4a1 1 0 0 1 1.12-.18l3.04 1.52a1 1 0 0 1 .5 1.2l-.58 1.58a1.5 1.5 0 0 1-1.45 1.01A15.5 15.5 0 0 1 3.5 7.88 1.5 1.5 0 0 1 4.5 6.43l1.58-.99a1 1 0 0 1 .54-.17z"/></svg>
-                                        +33 7 49 06 21 92
-                                    </a>
-                                    <a class="accent-pill rounded-xl px-4 py-3 flex items-center gap-2 hover:-translate-y-0.5 transition" href="https://www.linkedin.com/in/thomasnicoli" target="_blank" rel="noreferrer">
-                                        <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.61 4.07 5.5 2.99 5.5 1.9 5.5 1 4.61 1 3.5 1 2.4 1.9 1.5 2.99 1.5c1.08 0 1.99.9 1.99 2zm.02 4H1V22h4V7.5zM8.5 7.5h3.8v2.01h.05c.53-.95 1.82-1.95 3.75-1.95 4.01 0 4.75 2.64 4.75 6.07V22h-4v-7.2c0-1.72-.03-3.93-2.39-3.93-2.4 0-2.76 1.87-2.76 3.8V22h-4V7.5z"/></svg>
-                                        linkedin.com/in/thomasnicoli
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="glass rounded-3xl p-6 md:p-8 shadow-2xl w-full lg:w-[420px]">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <p class="text-xs uppercase tracking-wide text-slate-500">Intro video</p>
-                                <p class="text-lg font-semibold text-slate-900">CV presentation</p>
-                            </div>
-                            <span class="text-xs px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600">plays inline</span>
-                        </div>
-                        <div class="relative overflow-hidden rounded-2xl section-card">
-                            <video class="w-full h-56 md:h-64 lg:h-72 object-cover rounded-2xl border border-slate-200" controls preload="metadata" poster="imgs/moi-cv.png">
-                                <source src="videos/Thomas Nicoli - CV Presentation.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-3">Local file: videos/Thomas Nicoli - CV Presentation.mp4</p>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Sticky nav -->
-        <div class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-            <div class="max-w-6xl mx-auto px-6 py-3 flex flex-wrap gap-2 text-sm text-slate-700">
-                <a class="accent-pill px-4 py-2 rounded-xl hover:-translate-y-0.5 transition" href="#profile">Profile</a>
-                <a class="accent-pill px-4 py-2 rounded-xl hover:-translate-y-0.5 transition" href="#strengths">Strengths</a>
-                <a class="accent-pill px-4 py-2 rounded-xl hover:-translate-y-0.5 transition" href="#skills">Skills</a>
-                <a class="accent-pill px-4 py-2 rounded-xl hover:-translate-y-0.5 transition" href="#experience">Experience</a>
-                <a class="accent-pill px-4 py-2 rounded-xl hover:-translate-y-0.5 transition" href="#projects">Projects</a>
-                <a class="accent-pill px-4 py-2 rounded-xl hover:-translate-y-0.5 transition" href="#education">Education</a>
-            </div>
-        </div>
-
-        <main class="max-w-6xl mx-auto px-6 pb-16 space-y-10">
-            <!-- Profile -->
-            <section id="profile" class="section-card rounded-3xl p-6 md:p-8 shadow-lg">
-                <div class="flex flex-col md:flex-row gap-6 md:gap-10">
-                    <div class="flex-1 space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-600 font-semibold">P</div>
-                            <h2 class="text-2xl font-semibold">Profile</h2>
-                        </div>
-                        <p class="text-slate-700 leading-relaxed">Digital e-commerce and platform specialist with 10+ years of experience across D2C, content, and SEO, including 3+ years hands-on with Salesforce Commerce Cloud in a large international beauty group. Currently supporting the SFCC platform for multiple L'Oreal brands across Europe, acting as a strategic bridge between business teams, brands, and IT.</p>
-                        <p class="text-slate-700 leading-relaxed">Experienced in architecting and evolving multi-site SFCC solutions, integrating with CRM and marketing ecosystems, and coordinating external vendors to deliver scalable, high-performing platforms. Skilled at designing future-proof technical strategies aligned with business goals.</p>
-                        <p class="text-slate-700 leading-relaxed">Looking to leverage this experience to drive the global evolution and performance of Triumph's Salesforce Commerce Cloud landscape and support best-in-class digital shopping experiences.</p>
-                    </div>
-                    <div class="w-full md:w-80 lg:w-96 self-start rounded-2xl section-card p-5 space-y-4">
-                        <h3 class="text-lg font-semibold">Snapshot</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                            <div class="glass rounded-xl p-4">
-                                <p class="text-xs uppercase tracking-wide text-slate-500">SFCC</p>
-                                <p class="font-semibold">Solution architecture, platform evolution</p>
-                            </div>
-                            <div class="glass rounded-xl p-4">
-                                <p class="text-xs uppercase tracking-wide text-slate-500">Omnichannel</p>
-                                <p class="font-semibold">Global standards, local activations</p>
-                            </div>
-                            <div class="glass rounded-xl p-4">
-                                <p class="text-xs uppercase tracking-wide text-slate-500">Integration</p>
-                                <p class="font-semibold">APIs, jobs, CRM and analytics</p>
-                            </div>
-                            <div class="glass rounded-xl p-4">
-                                <p class="text-xs uppercase tracking-wide text-slate-500">Governance</p>
-                                <p class="font-semibold">Vendors, SLAs, releases</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Strengths -->
-            <section id="strengths" class="section-card rounded-3xl p-6 md:p-8 shadow-lg">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-10 h-10 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-600 font-semibold">S</div>
-                    <h2 class="text-2xl font-semibold">Key strengths for the role</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-700">
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold">SFCC solution architecture & evolution</h3>
-                        <p>Designing scalable, reusable structures and services for multi-site, multi-brand environments.</p>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold">Omnichannel & D2C journeys</h3>
-                        <p>Aligning global platform standards with local market requirements across content, services, promos, and data.</p>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold">Cross-system integration</h3>
-                        <p>Connecting SFCC with APIs, backend jobs, CRM/marketing tools, and analytics to power the broader ecosystem.</p>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold">Vendor & stakeholder management</h3>
-                        <p>Daily collaboration with IT partners, agencies, and business owners for backlog, scoping, and delivery.</p>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold">Platform reliability & monitoring</h3>
-                        <p>Incident follow-up, SFCC job monitoring, and SLA coordination to maintain stability and uptime.</p>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold">CI/CD mindset</h3>
-                        <p>Working with structured releases, automated jobs, versioning, and environment management.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Skills -->
-            <section id="skills" class="section-card rounded-3xl p-6 md:p-8 shadow-lg">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-600 font-semibold">K</div>
-                    <h2 class="text-2xl font-semibold">Core skills & technologies</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 text-sm text-slate-700 tags">
-                    <div class="glass rounded-2xl p-5 space-y-3">
-                        <h3 class="font-semibold text-base">Platforms & e-commerce</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-full">Salesforce Commerce Cloud (Business Manager, content, promos)</span>
-                            <span class="px-3 py-1 rounded-full">Catalog & services integration</span>
-                            <span class="px-3 py-1 rounded-full">Salesforce Marketing Cloud (triggered journeys, transactional emails)</span>
-                            <span class="px-3 py-1 rounded-full">Magento, PrestaShop, WordPress</span>
-                        </div>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-3">
-                        <h3 class="font-semibold text-base">Architecture & integration</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-full">Cross-system data flows</span>
-                            <span class="px-3 py-1 rounded-full">REST APIs, webhooks</span>
-                            <span class="px-3 py-1 rounded-full">Job-driven FTP / file exchanges</span>
-                            <span class="px-3 py-1 rounded-full">Data layer & tracking events</span>
-                        </div>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-3">
-                        <h3 class="font-semibold text-base">Front-end & development</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-full">HTML5, CSS3, JavaScript</span>
-                            <span class="px-3 py-1 rounded-full">Node.js, React (side projects)</span>
-                            <span class="px-3 py-1 rounded-full">Python utilities</span>
-                            <span class="px-3 py-1 rounded-full">UX for D2C product and services pages</span>
-                        </div>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-3">
-                        <h3 class="font-semibold text-base">Analytics & tooling</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-full">Google Analytics / GA4</span>
-                            <span class="px-3 py-1 rounded-full">Tag managers</span>
-                            <span class="px-3 py-1 rounded-full">Jira, ServiceNow, Confluence, Notion</span>
-                            <span class="px-3 py-1 rounded-full">Git/GitHub, CI/CD collaboration</span>
-                        </div>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-3">
-                        <h3 class="font-semibold text-base">Languages</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-full">French (native/bilingual)</span>
-                            <span class="px-3 py-1 rounded-full">English (native/bilingual)</span>
-                            <span class="px-3 py-1 rounded-full">Spanish (native/bilingual)</span>
-                            <span class="px-3 py-1 rounded-full">Italian (elementary)</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Experience -->
-            <section id="experience" class="section-card rounded-3xl p-6 md:p-8 shadow-lg">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-600 font-semibold">E</div>
-                    <h2 class="text-2xl font-semibold">Professional experience</h2>
-                </div>
-                <div class="space-y-6">
-                    <div class="glass rounded-2xl p-5">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                            <div>
-                                <h3 class="font-semibold text-lg">L'Oreal - Digital Web & Platform Management (D2C & SFCC)</h3>
-                                <p class="text-sm text-slate-500">Madrid, Spain - Aug 2024 - Present</p>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-xs uppercase tracking-wide text-blue-700">Platform ownership</span>
-                        </div>
-                        <ul class="mt-3 space-y-2 text-slate-700 text-sm list-disc list-inside leading-relaxed">
-                            <li>Own D2C SFCC platform support and optimization across L'Oreal brands, ensuring consistency, stability, and scalability in Europe.</li>
-                            <li>Translate business needs into SFCC requirements (epics, user stories, briefs) and challenge them through a platform-governance lens.</li>
-                            <li>Deploy services (Virtual Try-On, shade finders, diagnostics) on SFCC PDPs/PLPs, coordinating data flows, UX placement, and tracking.</li>
-                            <li>Manage triggered email migration from SFCC to Salesforce Marketing Cloud, including templates, API calls, triggers, and testing.</li>
-                            <li>Implement front-end personalization and engagement features while keeping components reusable and scalable.</li>
-                            <li>Coordinate external development partners and internal IT/QA on incidents, enhancements, and roll-outs.</li>
-                            <li>Follow up on SFCC jobs, incidents, and performance topics with IT to maintain uptime and robust escalation.</li>
-                        </ul>
-                    </div>
-                    <div class="glass rounded-2xl p-5">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                            <div>
-                                <h3 class="font-semibold text-lg">L'Oreal - Corporate Webmaster (SFCC), NYX Professional Makeup - DEC</h3>
-                                <p class="text-sm text-slate-500">Madrid, Spain - Mar 2023 - Aug 2024</p>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-xs uppercase tracking-wide text-indigo-700">Campaign execution</span>
-                        </div>
-                        <ul class="mt-3 space-y-2 text-slate-700 text-sm list-disc list-inside leading-relaxed">
-                            <li>Supervised marketing and campaign content on SFCC (home, PLP, PDP, landing pages) for key European markets.</li>
-                            <li>Mapped business mechanics to SFCC assets, promotions, and services to launch digital campaigns.</li>
-                            <li>Managed multi-market deployments, handling localization and alignment with local regulations and expectations.</li>
-                            <li>Delivered continuous updates and optimization of content and structure to improve engagement.</li>
-                            <li>Provided performance reporting and collaborated with product owners, IT partners, and local markets on new features.</li>
-                        </ul>
-                    </div>
-                    <div class="glass rounded-2xl p-5">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                            <div>
-                                <h3 class="font-semibold text-lg">Goat Interactive - Web Content Project Manager</h3>
-                                <p class="text-sm text-slate-500">London, United Kingdom - Oct 2021 - Jan 2023</p>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs uppercase tracking-wide text-emerald-700">Content delivery</span>
-                        </div>
-                        <ul class="mt-3 space-y-2 text-slate-700 text-sm list-disc list-inside leading-relaxed">
-                            <li>Managed a multilingual website portfolio, ensuring brand consistency and performance.</li>
-                            <li>Built and updated pages with HTML5, CSS3, and JavaScript, partnering with designers and CRM teams.</li>
-                            <li>Planned and executed digital campaigns and aligned promotions with customer journeys.</li>
-                            <li>Delivered weekly and monthly reports to country managers, refining content strategy.</li>
-                        </ul>
-                    </div>
-                    <div class="glass rounded-2xl p-5">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                            <div>
-                                <h3 class="font-semibold text-lg">Metamorphoses Consulting - Translator & SEO Content Specialist</h3>
-                                <p class="text-sm text-slate-500">Remote - Aug 2017 - May 2022</p>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs uppercase tracking-wide text-cyan-700">SEO & content</span>
-                        </div>
-                        <ul class="mt-3 space-y-2 text-slate-700 text-sm list-disc list-inside leading-relaxed">
-                            <li>Produced multilingual SEO-optimized content for e-commerce, technology, and lifestyle brands.</li>
-                            <li>Conducted keyword research, on-page optimization, and content structuring to improve organic visibility.</li>
-                            <li>Developed a strong intercultural and customer-centric approach applied to current e-commerce work.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Projects -->
-            <section id="projects" class="section-card rounded-3xl p-6 md:p-8 shadow-lg">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-600 font-semibold">P</div>
-                    <h2 class="text-2xl font-semibold">Selected technical / side projects</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-700">
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold text-lg">SFCC Content Asset Analyzer (Python + AI)</h3>
-                        <p class="text-sm">Personal tool to crawl and analyze SFCC-powered sites, identify content assets, and classify them using AI to support governance and consistency.</p>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold text-lg">AI-driven automation scripts</h3>
-                        <p class="text-sm">Python and Node.js utilities to streamline catalog checks, promotion setups, and documentation generation for SFCC environments.</p>
-                    </div>
-                    <div class="glass rounded-2xl p-5 space-y-2">
-                        <h3 class="font-semibold text-lg">AI consulting micro-apps</h3>
-                        <p class="text-sm">Small web apps (React/Next.js, Astro) showcasing automation, data analysis, and chatbot use cases for e-commerce and SMEs.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Education -->
-            <section id="education" class="section-card rounded-3xl p-6 md:p-8 shadow-lg">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-600 font-semibold">E</div>
-                    <h2 class="text-2xl font-semibold">Education</h2>
-                </div>
-                <div class="space-y-4 text-slate-700">
-                    <div class="glass rounded-2xl p-4">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <div>
-                                <h3 class="font-semibold">ISIT - Institut Superieur d'Interpreting and Translation (Paris, France)</h3>
-                                <p class="text-sm text-slate-500">Master's Degree - Intercultural Management, Marketing & Translation (2014 - 2016)</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="glass rounded-2xl p-4">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <div>
-                                <h3 class="font-semibold">ISIT - Institut de Management et de Communication Interculturels</h3>
-                                <p class="text-sm text-slate-500">Bachelor's Degree - Management / Communication / Translation (2012 - 2014)</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="glass rounded-2xl p-4">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <div>
-                                <h3 class="font-semibold">Universitat Pompeu Fabra (Barcelona, Spain)</h3>
-                                <p class="text-sm text-slate-500">Exchange - Spanish & Iberian Studies (2013)</p>
-                                <p class="text-xs text-slate-500 mt-1">(Additional earlier preparatory classes in literature and humanities in France.)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+<body class="text-slate-700 antialiased selection:bg-sky-100 selection:text-sky-900">
+    
+    <!-- Background Decorative Elements -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
     </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl">
+        <div class="glass-panel rounded-full px-6 py-3 flex justify-between items-center shadow-lg shadow-slate-200/50">
+            <a href="#" class="font-serif font-bold text-slate-900 text-lg tracking-tight">TN.</a>
+            <div class="hidden md:flex gap-1">
+                <a href="#experience" class="px-4 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-full transition-all">Experience</a>
+                <a href="#skills" class="px-4 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-full transition-all">Skills</a>
+                <a href="#projects" class="px-4 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-full transition-all">Projects</a>
+            </div>
+            <a href="mailto:thomas.nicoli.cv@gmail.com" class="px-5 py-2 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-colors shadow-md">Contact Me</a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 pt-32 pb-20">
+        
+        <!-- Hero Section -->
+        <section class="mb-24 animate-fade-in-up">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="flex-1 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-6">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        Available for opportunities
+                    </div>
+                    <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-tight mb-6">
+                        Thomas Nicoli
+                    </h1>
+                    <p class="text-xl md:text-2xl text-slate-600 font-light mb-8 leading-relaxed">
+                        Salesforce Commerce Cloud <span class="font-medium text-slate-900">Solution Architect</span> & Digital D2C Strategist.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 text-sm">
+                        <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-slate-200 shadow-sm text-slate-600">
+                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Madrid, Spain
+                        </div>
+                        <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-slate-200 shadow-sm text-slate-600">
+                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            +34 612 345 678
+                        </div>
+                        <a href="https://www.linkedin.com/in/thomas-nicoli" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 border border-blue-100 text-blue-700 hover:bg-blue-100 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Video Card -->
+                <div class="w-full md:w-[400px] relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative glass-panel p-2 rounded-2xl">
+                        <video class="w-full rounded-xl shadow-inner bg-slate-100" controls poster="imgs/moi-cv.png">
+                            <source src="videos/Thomas Nicoli - CV Presentation.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="p-4">
+                            <p class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-1">Introduction</p>
+                            <p class="font-medium text-slate-800">Video Presentation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <p class="text-3xl font-serif font-bold text-slate-900 mb-1">10+</p>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Years Experience</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <p class="text-3xl font-serif font-bold text-slate-900 mb-1">10+</p>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Luxury Brands</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <p class="text-3xl font-serif font-bold text-slate-900 mb-1">8+</p>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">European Markets</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <p class="text-3xl font-serif font-bold text-slate-900 mb-1">3</p>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Languages</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section (Timeline) -->
+        <section id="experience" class="mb-24 scroll-mt-24">
+            <div class="flex items-end justify-between mb-12">
+                <div>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-4">Professional Journey</h2>
+                    <p class="text-slate-600 max-w-2xl">A decade of evolving e-commerce platforms, managing complex integrations, and bridging the gap between business vision and technical execution.</p>
+                </div>
+            </div>
+
+            <div class="relative pl-8 md:pl-12 border-l border-slate-200 space-y-16">
+                
+                <!-- Role 1 -->
+                <div class="relative group">
+                    <div class="absolute -left-[41px] md:-left-[57px] top-1 h-5 w-5 rounded-full border-4 border-white bg-blue-600 shadow-md group-hover:scale-125 transition-transform"></div>
+                    <div class="glass-card p-8 rounded-2xl">
+                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">Digital Web & Platform Management Specialist</h3>
+                                <p class="text-blue-600 font-medium">L'Oréal • D2C E-Commerce (Europe)</p>
+                            </div>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-mono rounded-full whitespace-nowrap">Nov 2017 – Present</span>
+                        </div>
+                        <ul class="space-y-3 text-slate-600 leading-relaxed">
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0"></span>
+                                <span><strong>Solution Design:</strong> Partnered with business stakeholders for 10+ luxury brands (Lancôme, YSL, Armani) to translate requirements into scalable SFCC solutions.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0"></span>
+                                <span><strong>Vendor Management:</strong> Led technical coordination with integrators (Capgemini) and agencies, ensuring on-budget, timely delivery.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0"></span>
+                                <span><strong>Platform Stability:</strong> Managed SLAs, incident escalations, and troubleshooting for SFCC Business Manager (catalog, content, PDP/PLP).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0"></span>
+                                <span><strong>Integration:</strong> Coordinated activation of beauty-tech services, payment providers, and SFMC transactional journeys.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Role 2 -->
+                <div class="relative group">
+                    <div class="absolute -left-[41px] md:-left-[57px] top-1 h-5 w-5 rounded-full border-4 border-white bg-slate-400 shadow-md group-hover:scale-125 transition-transform"></div>
+                    <div class="glass-card p-8 rounded-2xl">
+                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">Senior E-commerce Coordinator</h3>
+                                <p class="text-slate-600 font-medium">Global Retail Group • Paris, France</p>
+                            </div>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-mono rounded-full whitespace-nowrap">Jun 2013 – Oct 2017</span>
+                        </div>
+                        <ul class="space-y-3 text-slate-600 leading-relaxed">
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0"></span>
+                                <span>Managed day-to-day operations and merchandising for multiple e-commerce platforms, including initial SFCC migration projects.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0"></span>
+                                <span>Coordinated with local markets for digital marketing campaigns and content updates.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0"></span>
+                                <span>Analyzed performance via Google Analytics to drive A/B testing and site improvements.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Skills Grid -->
+        <section id="skills" class="mb-24 scroll-mt-24">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-10">Core Competencies</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-panel p-6 rounded-2xl hover:border-blue-300 transition-colors">
+                    <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-6 text-2xl">☁️</div>
+                    <h3 class="font-bold text-lg text-slate-900 mb-4">Platforms & Architecture</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">SFCC</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">Business Manager</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">SFMC</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">Omnichannel</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">Integrations (ERP/PIM)</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-panel p-6 rounded-2xl hover:border-emerald-300 transition-colors">
+                    <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-6 text-2xl">💻</div>
+                    <h3 class="font-bold text-lg text-slate-900 mb-4">Technical Stack</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">HTML5 / CSS3</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">JavaScript (ES6+)</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">Python (Automation)</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">CI/CD & DevOps</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">JIRA / Confluence</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-panel p-6 rounded-2xl hover:border-purple-300 transition-colors">
+                    <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mb-6 text-2xl">🚀</div>
+                    <h3 class="font-bold text-lg text-slate-900 mb-4">Strategy & Delivery</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">Stakeholder Mgmt</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">Requirements Analysis</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">Vendor Management</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">Agile Delivery</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-600">QA & Budgeting</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="mb-24 scroll-mt-24">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-10">Selected Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-8 rounded-2xl group cursor-default">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">SFCC Platform Evolution</h3>
+                        <span class="text-2xl opacity-50 group-hover:opacity-100 transition-opacity">📈</span>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed">Led requirements gathering and technical coordination for a major architecture enhancement, improving scalability to support a 30% increase in product catalog size across all EMEA markets.</p>
+                    <div class="flex gap-2">
+                        <span class="text-xs font-mono text-blue-600 bg-blue-50 px-2 py-1 rounded">Architecture</span>
+                        <span class="text-xs font-mono text-blue-600 bg-blue-50 px-2 py-1 rounded">Scalability</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl group cursor-default">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Omnichannel Activation</h3>
+                        <span class="text-2xl opacity-50 group-hover:opacity-100 transition-opacity">🛍️</span>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed">Managed end-to-end integration of "Virtual Try-On" beauty-tech service, coordinating between third-party vendors, internal IT, and SFCC integrators.</p>
+                    <div class="flex gap-2">
+                        <span class="text-xs font-mono text-blue-600 bg-blue-50 px-2 py-1 rounded">Integration</span>
+                        <span class="text-xs font-mono text-blue-600 bg-blue-50 px-2 py-1 rounded">Beauty Tech</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl group cursor-default md:col-span-2">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Process Automation</h3>
+                        <span class="text-2xl opacity-50 group-hover:opacity-100 transition-opacity">🤖</span>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed">Developed Python scripts to automate repetitive reporting tasks from SFCC Business Manager, reducing manual effort for the e-commerce team by ~10 hours per week.</p>
+                    <div class="flex gap-2">
+                        <span class="text-xs font-mono text-blue-600 bg-blue-50 px-2 py-1 rounded">Python</span>
+                        <span class="text-xs font-mono text-blue-600 bg-blue-50 px-2 py-1 rounded">Automation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education" class="mb-12 scroll-mt-24">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-10">Education</h2>
+            <div class="glass-panel p-8 rounded-2xl">
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Full-Stack Web Development Bootcamp</h3>
+                        <p class="text-slate-500">Udemy • Madrid, Spain</p>
+                    </div>
+                    <div class="w-full h-px bg-slate-200"></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">M.Sc. International Management & Translation</h3>
+                        <p class="text-slate-500">ISIT (Institut Supérieure d'Interprètes et de Traducteurs) • Paris, France</p>
+                    </div>
+                    <div class="w-full h-px bg-slate-200"></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">B.A. Applied Languages</h3>
+                        <p class="text-slate-500">Paris-Sorbonne University / Lycée Janson de Sailly • Paris, France</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-400 text-sm py-12">
+            <p>&copy; 2025 Thomas Nicoli. Built with Tailwind CSS.</p>
+        </footer>
+
+    </main>
 </body>
 </html>
